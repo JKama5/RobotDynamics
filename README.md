@@ -1,4 +1,4 @@
-# # RBE 501 - Final Project: Robot Dynamics
+# RBE 501 - Final Project: Robot Dynamics
 
 ## Overview
 
