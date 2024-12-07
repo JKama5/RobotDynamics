@@ -18,10 +18,11 @@ classdef Task1Functions
             self.glist=self.MathRobot.glist;
         end
         
-        %find the transformation from the EE to the Target position
-        %Target: 4x4 Transformation from origin to target
+        %find the transformation from the start to the target position
+        %start: 4x4 Transformation from origin to start
+        %target: 4x4 Transformation from origin to target
         %T: 4x4 transformationn from EE to Target
-        function T=FindTransformations(target)
+        function T=FindTransformations(start,target)
             T=zeros(4,4);
         end
 
