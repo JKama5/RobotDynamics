@@ -22,8 +22,10 @@ classdef Task1Functions
         %start: 4x4 Transformation from origin to start
         %target: 4x4 Transformation from origin to target
         %T: 4x4 transformationn from EE to Target
-        function T=FindTransformations(start,target)
-            T=zeros(4,4);
+        function T=FindTransformations(~,start,target)
+            p=target(1:3,4)-start(1:3,4);
+            r=target(1:3,1:3)*transpose(start(1:3,1:3));
+            T=[r p;0 0 0 1];
         end
 
         %find the thetalist that will get the robot to the target
