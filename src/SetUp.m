@@ -12,3 +12,4 @@ addpath(libraryFolder);
 
 % (Optional) Confirm the path was added
 disp(['Library folder added to path: ', libraryFolder]);
+
