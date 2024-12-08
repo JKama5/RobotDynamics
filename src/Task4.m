@@ -15,18 +15,7 @@ A_transform = robot.FindTFromPosAndAngle(A_target);
 A_orient = A_transform(1:3, 1:3);
 thetaA = robot.computeJointAngles(A_target, A_orient, thetaList0);
 robot.writeJoints(rad2deg(thetaA));
-
-tic;
-while toc < travelTime
-    % try
-    %     readings = robot.getJointsReadings();
-    %     present_currents_mA = readings(3, Joint); 
-    %     currentA = [currentA, present_currents_mA];
-    % catch ME
-    %     warning('Unable to read present currents. Error: %s', getReport(ME));
-    % end
-    % pause(0.01); 
-end
+pause(maxTime);
 %% Get Motor Currents and Calculate Theoretical Torques
 sleep(1);
 try
