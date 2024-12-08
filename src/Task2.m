@@ -1,3 +1,5 @@
+clear;
+close all;
 R=OurRobot;
 % Model(R.mlist);
 Task=Task1Functions(R);
@@ -26,7 +28,7 @@ figure;
 stairs(time,jointVelocities');
 xlabel('time (s)')
 ylabel('velocity (rad/s)')
-legend('j1','j2','j3','j4')
+
 relativeJointPos=zeros(size(jointVelocities));
 for i=1:size(jointVelocities,2)
     relativeJointPos(:,i)=(sum(jointVelocities(:,1:i),2)/ticksPerSecond)+thetaListA;
@@ -36,7 +38,14 @@ figure;
 plot(time,relativeJointPos')
 xlabel('time (s)')
 ylabel('position (rad)')
+% legend('j1','j2','j3','j4')
+hold on
+scatter(0,thetaListA)
+scatter(timePerFirstMotion,thetaListC)
+scatter(20,thetaListB)
 legend('j1','j2','j3','j4')
+hold off
+
 % LSPBCalculator()
 
 
