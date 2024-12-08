@@ -48,7 +48,11 @@ function [thetalist, success] ...
 %  figure
 %  hold on;
 % Scale=.05;
+<<<<<<< HEAD
+% % axis([-Scale*10 Scale*10 -Scale*10 Scale*10 -Scale*10 Scale*10])
+=======
 % axis([-Scale*10 Scale*10 -Scale*10 Scale*10 -Scale*10 Scale*10])
+>>>>>>> e6521e55201f5e6f23001ba6b092eaf05f624882
 % axis([-Scale*5 Scale*10 -Scale*10 Scale*10 -Scale*0 Scale*10])
 % view([0 1 0])
 % xlabel('X-axis'); 
@@ -70,7 +74,6 @@ function [thetalist, success] ...
 % quiver3(T(1,4),T(2,4),T(3,4),T(1,2)*Scale,T(2,2)*Scale,T(3,2)*Scale,'g');
 % quiver3(T(1,4),T(2,4),T(3,4),T(1,3)*Scale,T(2,3)*Scale,T(3,3)*Scale,'b');
 % text(T(1,4),T(2,4),T(3,4),'EE new');
-
 
 % thetalist0 = [0; deg2rad(-45); deg2rad(45); deg2rad(-45);];
 % eomg = 0.000001;
