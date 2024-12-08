@@ -7,7 +7,7 @@ classdef realRobot < OM_X_arm
         mOtherDim; % Stores extraneous second link dimensions (mm)
         initialTranslation = [0, 0, 36.076]; % [x, y, z]
         cached_pose = [0,0,0,0]; % Saves the last desired position sent to quintic_move()
-
+        maxMotorCurrent = 1000 %mA
         mlist=zeros(4,4,5);
         slist;
         glist=zeros(6,6,4);
@@ -22,7 +22,7 @@ classdef realRobot < OM_X_arm
             SetUp;
             % Change robot to position mode with torque enabled by default
             % Feel free to change this as desired
-            self.writeMode('c');
+            self.writeMode('cp');
             self.writeMotorState(true);
 
             % Set the robot to move between positions with a 5 second profile
@@ -203,6 +203,30 @@ classdef realRobot < OM_X_arm
             readings(3, :) = self.bulkReadWrite(DX_XM430_W350.CURR_LEN, DX_XM430_W350.CURR_CURRENT) ./ DX_XM430_W350.TICKS_PER_mA;
         end
 
+
+        function setCurrentLimit(self, percentage)
+
+            if percentage < 0 || percentage > 100
+                error('Percentage must be between 0 and 100');
+            end
+            maxCurrent = self.maxMotorCurrent; % Replace with your motor's max current in mA
+            scaledCurrent = (percentage / 100) * maxCurrent;
+        
+            self.writeCurrents(repmat(scaledCurrent, 1, 4)); % Apply to all joints
+        end
+
+        function moveToPositionWithSpeed(self, targetAngles, speedPercentage)
+
+            self.setCurrentLimit(speedPercentage);
+        
+
+            self.writeJoints(targetAngles);
+        
+            % Wait for the motion to complete (adjust delay based on motion)
+            % pause(5); % Example wait time, adjust based on your setup
+        end
+
+
         function [thetaList, success] = FindThetaList(self, target, thetaList0)
                  
                     B = self.slist;
@@ -253,22 +277,32 @@ classdef realRobot < OM_X_arm
         end
 
 
-       function thetaList = computeJointAngles(self, targetPos, targetOrient)
+       function thetaList = computeJointAngles(self, targetPos, targetOrient,thetaList0)
+            % Compute the target transformation matrix
             T_target = [targetOrient, targetPos; 0, 0, 0, 1];
+            disp('Target transformation matrix (T_target):');
+            disp(T_target);
         
-            thetaList0 = zeros(size(self.slist, 2), 1); 
-        
-            eomg = 1e-3; 
-            ev = 1e-3;  
+            % Solve inverse kinematics
+            eomg = 1e-2; % Orientation error tolerance
+            ev = 1e-2;   % Position error tolerance
             [thetaList, success] = IKinSpace(self.slist, self.M, T_target, thetaList0, eomg, ev);
+            if abs(thetaList(1)) > 1.54 || abs(thetaList(2)) > 1.54 || abs(thetaList(3)) > 1.54 || abs(thetaList(4)) > 1.54 
+                thetaList0 = wrapToPi(thetaList)/2;
+                disp('I enetered')
+                thetaList = computeJointAngles(self,targetPos,targetOrient,thetaList0);
+            end
+            thetaList = wrapToPi(thetaList);
+
+            % Ensure the result is a column vector
+            thetaList = thetaList(:);
         
+            % Check for success
             if ~success
                 error('Inverse kinematics did not converge to a solution.');
             end
-            
-            disp('Computed joint angles (radians):');
-            disp(thetaList);
         end
+
 
 
         function T=FindTFromPosAndAngle(~,pos)

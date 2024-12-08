@@ -1,15 +1,12 @@
-% Initialize the realRobot instance
-robot = realRobot(); % Create an instance of realRobot
+robot = realRobot(); 
 
-% Create an instance of Task1Functions, passing the robot object
 task1 = Task1Functions(robot);
 
-% Define start and end transformations
-% Start Transformation (4x4 homogeneous matrix)
+% Start Transformation 
 startPos = robot.M;
 
-% End Transformation (4x4 homogeneous matrix)
-endPos = [1 0 0 0.185;     % Example: Replace with your actual end position
+% End Transformation 
+endPos = [1 0 0 0.185;     
           0 1 0 -0.185;
           0 0 1 0.185;
           0 0 0 1];
@@ -19,7 +16,6 @@ maxVel = 0.5;          % 50% of maximum velocity
 Tf = 10;               % 10 seconds for the trajectory
 initialAngles = [0; 1.5; 0; 0]; % Initial guess for joint angles
 
-% Call posControl to move the robot
 disp('Starting position control...');
 try
     % Call posControl with correct name-value pair syntax
