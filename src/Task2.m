@@ -1,3 +1,5 @@
+clear;
+close all;
 R=OurRobot;
 % Model(R.mlist);
 Task=Task1Functions(R);
@@ -5,6 +7,7 @@ TA=Task.FindTFromPosAndAngle([.185,-.185,.185]');
 TB=Task.FindTFromPosAndAngle([.185,.170,.070]');
 TC=Task.FindTFromPosAndAngle([.185, 0, .240]');
 figure;
+title('End Effector 3D Position and Orientation')
 PlotFrame(TA,true);
 PlotFrame(TB,true);
 PlotFrame(TC,false);
@@ -27,6 +30,7 @@ stairs(time,jointVelocities');
 xlabel('time (s)')
 ylabel('velocity (rad/s)')
 legend('j1','j2','j3','j4')
+title('Joint Velocities Over Time')
 relativeJointPos=zeros(size(jointVelocities));
 for i=1:size(jointVelocities,2)
     relativeJointPos(:,i)=(sum(jointVelocities(:,1:i),2)/ticksPerSecond)+thetaListA;
@@ -36,7 +40,16 @@ figure;
 plot(time,relativeJointPos')
 xlabel('time (s)')
 ylabel('position (rad)')
+hold on
+scatter(0,thetaListA)
+scatter(timePerFirstMotion,thetaListC)
+scatter(timePerFirstMotion+2,thetaListC)
+scatter(20,thetaListB)
 legend('j1','j2','j3','j4')
+title('Joint Positions Over Time')
+subtitle('including target positions')
+hold off
+
 % LSPBCalculator()
 
 
