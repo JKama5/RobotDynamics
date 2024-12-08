@@ -48,11 +48,7 @@ function [thetalist, success] ...
 %  figure
 %  hold on;
 % Scale=.05;
-<<<<<<< HEAD
-% % axis([-Scale*10 Scale*10 -Scale*10 Scale*10 -Scale*10 Scale*10])
-=======
 % axis([-Scale*10 Scale*10 -Scale*10 Scale*10 -Scale*10 Scale*10])
->>>>>>> e6521e55201f5e6f23001ba6b092eaf05f624882
 % axis([-Scale*5 Scale*10 -Scale*10 Scale*10 -Scale*0 Scale*10])
 % view([0 1 0])
 % xlabel('X-axis'); 

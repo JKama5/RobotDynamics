@@ -287,7 +287,7 @@ classdef realRobot < OM_X_arm
             eomg = 1e-2; % Orientation error tolerance
             ev = 1e-2;   % Position error tolerance
             [thetaList, success] = IKinSpace(self.slist, self.M, T_target, thetaList0, eomg, ev);
-            if abs(thetaList(1)) > 1.54 || abs(thetaList(2)) > 1.54 || abs(thetaList(3)) > 1.54 || abs(thetaList(4)) > 1.54 
+            if any(abs(thetaList) > 1.54)
                 thetaList0 = wrapToPi(thetaList)/2;
                 disp('I enetered')
                 thetaList = computeJointAngles(self,targetPos,targetOrient,thetaList0);
