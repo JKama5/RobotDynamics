@@ -45,31 +45,31 @@ function [thetalist, success] ...
 %         [1, 0, 0, 0.05000]; 
 %         [0, 0, 0, 1]];
 % close;
- figure
- hold on;
-Scale=.05;
+%  figure
+%  hold on;
+% Scale=.05;
 % axis([-Scale*10 Scale*10 -Scale*10 Scale*10 -Scale*10 Scale*10])
-axis([-Scale*5 Scale*10 -Scale*10 Scale*10 -Scale*0 Scale*10])
-view([0 1 0])
-xlabel('X-axis'); 
-ylabel('Y-axis'); 
-zlabel('Z-axis'); 
-quiver3(0,0,0,Scale,0,0,'r');
-quiver3(0,0,0,0,Scale,0,'g');
-quiver3(0,0,0,0,0,Scale,'b');
-text(0,0,0,'base');
-
-
-
-quiver3(M(1,4),M(2,4),M(3,4),M(1,1)*Scale,M(2,1)*Scale,M(3,1)*Scale,'r');
-quiver3(M(1,4),M(2,4),M(3,4),M(1,2)*Scale,M(2,2)*Scale,M(3,2)*Scale,'g');
-quiver3(M(1,4),M(2,4),M(3,4),M(1,3)*Scale,M(2,3)*Scale,M(3,3)*Scale,'b');
-text(M(1,4),M(2,4),M(3,4),'EE Home');
-
-quiver3(T(1,4),T(2,4),T(3,4),T(1,1)*Scale,T(2,1)*Scale,T(3,1)*Scale,'r');
-quiver3(T(1,4),T(2,4),T(3,4),T(1,2)*Scale,T(2,2)*Scale,T(3,2)*Scale,'g');
-quiver3(T(1,4),T(2,4),T(3,4),T(1,3)*Scale,T(2,3)*Scale,T(3,3)*Scale,'b');
-text(T(1,4),T(2,4),T(3,4),'EE new');
+% axis([-Scale*5 Scale*10 -Scale*10 Scale*10 -Scale*0 Scale*10])
+% view([0 1 0])
+% xlabel('X-axis'); 
+% ylabel('Y-axis'); 
+% zlabel('Z-axis'); 
+% quiver3(0,0,0,Scale,0,0,'r');
+% quiver3(0,0,0,0,Scale,0,'g');
+% quiver3(0,0,0,0,0,Scale,'b');
+% text(0,0,0,'base');
+% 
+% 
+% 
+% quiver3(M(1,4),M(2,4),M(3,4),M(1,1)*Scale,M(2,1)*Scale,M(3,1)*Scale,'r');
+% quiver3(M(1,4),M(2,4),M(3,4),M(1,2)*Scale,M(2,2)*Scale,M(3,2)*Scale,'g');
+% quiver3(M(1,4),M(2,4),M(3,4),M(1,3)*Scale,M(2,3)*Scale,M(3,3)*Scale,'b');
+% text(M(1,4),M(2,4),M(3,4),'EE Home');
+% 
+% quiver3(T(1,4),T(2,4),T(3,4),T(1,1)*Scale,T(2,1)*Scale,T(3,1)*Scale,'r');
+% quiver3(T(1,4),T(2,4),T(3,4),T(1,2)*Scale,T(2,2)*Scale,T(3,2)*Scale,'g');
+% quiver3(T(1,4),T(2,4),T(3,4),T(1,3)*Scale,T(2,3)*Scale,T(3,3)*Scale,'b');
+% text(T(1,4),T(2,4),T(3,4),'EE new');
 
 
 % thetalist0 = [0; deg2rad(-45); deg2rad(45); deg2rad(-45);];
@@ -98,8 +98,8 @@ while err && i < maxiterations
     Vs = Adjoint(Tsb) * se3ToVec(MatrixLog6(TransInv(Tsb) * T));
     err = norm(Vs(1: 3)) > eomg || norm(Vs(4: 6)) > ev;
 end
-success = ~ err
-display(i)
-display(Tsb)
+success = ~ err;
+% display(i)
+% display(Tsb)
 rad2deg(thetalist)
 end
