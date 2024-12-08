@@ -1,23 +1,13 @@
-robot = Robot();
+robot = realRobot();
 robot.writeMode('curr position');
-
-desired_positions = [0, 0, 0, 0];
-% 
- robot.writeJoints(desired_positions);
-robot.writeGripper(true)
-
-
-% Example joint angles to test
-% testAngles = [-45.0000
-%   -10.8933
-%    30.5373
-%   -19.6439]; % In degrees
-% w
-% robot.writeJoints(testAngles);
-
-
+angle = [0;0;0;0];
+maxTime = 10;
+speedPecentage = 90;
+travelTime = maxTime - (speedPecentage/100 * maxTime);
+robot.writeTime(travelTime,travelTime/3)
+robot.writeJoints(angle)
 tic;
-while toc < 15
+while toc < 6
     try
         readings = robot.getJointsReadings();
         present_position = readings(1,:);
@@ -28,9 +18,6 @@ while toc < 15
     catch ME
         warning('Unable to read present currents. Error: %s', ME.message);
     end
-    
+
     pause(0.25); 
 end
-
-robot.writeMotorState(false);
-disp('Torque disabled.');

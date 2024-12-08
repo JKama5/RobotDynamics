@@ -46,7 +46,7 @@ function [thetalist, success] = IKinBody(Blist, M, T, thetalist0, eomg, ev)
 %         [0.2751, -0.8355, 0.4756, 1.1485]; 
 %         [0.9609, 0.2224, -0.165, 2.3195]; 
 %         [0, 0, 0, 1]];
-close;
+% close;
 % figure
 % hold on;
 % Scale=.2;
@@ -93,7 +93,7 @@ while err && i < maxiterations
     Vb = se3ToVec(MatrixLog6(TransInv(FKinBody(M, Blist, thetalist)) * T));
     err = norm(Vb(1: 3)) > eomg || norm(Vb(4: 6)) > ev;
 end
-success = ~ err;
+success = ~ err
 % display(i)
 % display(Tsb)
 end
