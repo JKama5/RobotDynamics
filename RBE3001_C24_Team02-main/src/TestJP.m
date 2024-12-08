@@ -1,1 +1,0 @@
-load('SymbolicJP.mat','JP');
