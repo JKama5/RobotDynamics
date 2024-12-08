@@ -1,4 +1,4 @@
-classdef RealRobot
+classdef realRobot
     % Combines kinematics with dynamic control using a Robot instance
     
     properties
