@@ -22,10 +22,21 @@ classdef Task1Functions
         %start: 4x4 Transformation from origin to start
         %target: 4x4 Transformation from origin to target
         %T: 4x4 transformationn from EE to Target
-        function T=FindTransformations(start,target)
-            T=zeros(4,4);
+        function T=FindTransformations(~,start,target)
+            T=inv(start)*target;
         end
 
+        %Finds the transformation from the origin to point P with an
+        %orientation where the end effector is in line between the origin
+        %and the point while parallel to the board
+        %T: 4x4 tranformation matrix of EE when EE is at point pos
+        %pos: 3x1 position vector
+        function T=FindTFromPosAndAngle(~,pos)
+            newX=[0;0;1];
+            newZ=-unitVector([pos(1);pos(2);0]);
+            newY=cross(newZ,newX);
+            T=[newX newY newZ pos; 0 0 0 1];
+        end
         %find the thetalist that will get the robot to the target
         %target:4x4 Transformation from origin to target
         %thetaList: 4x1 joint angles
