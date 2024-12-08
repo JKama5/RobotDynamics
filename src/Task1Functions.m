@@ -29,9 +29,17 @@ classdef Task1Functions
         %find the thetalist that will get the robot to the target
         %target:4x4 Transformation from origin to target
         %thetaList: 4x1 joint angles
-        function thetaList=FindThetaList(target)
-            thetaList=zeros(4,1);
+        function [thetaList, success] = FindThetaList(target, thetalist0)
+         
+            B = self.slist;
+            Home = self.M;
+            eomg = 1e-3;
+            ev = 1e-3;
+            [thetaList, success] = IKinBody(B, Home, target, thetaList0, eomg, ev);
             
+            if ~success
+                error('Inverse kinematics did not converge to a solution.');
+            end
         end
 
         %Move from startPos to endPos at maxVel speed using the movment
@@ -40,10 +48,38 @@ classdef Task1Functions
         %endPos: 4x4 Transformation from origin to target position
         %maxVel: decimal percentage of maximum velocity
         %robot: robot class that writes to the robot
-        function posControl(startPos,endPos,maxVel,robot)
-            
+        function posControl(self, startPos, endPos, maxVel, robot, Tf, thetaList0)
+
+            % Trajectory generation
+            N = 100; % Number of trajectory points
+            traj = CartesianTrajectory(startPos, endPos, Tf, N, 5); % Generate trajectory
+        
+            % Loop through the trajectory
+            for i = 1:N
+                % Get target transformation at this trajectory point
+                T_target = traj(:, :, i);
+        
+                % Solve inverse kinematics for target joint angles
+                [thetaList, success] = self.FindThetaList(T_target, thetaList0);
+                if ~success
+                    error('Inverse kinematics failed at trajectory point %d.', i);
+                end
+        
+                % Update thetaList0 for the next iteration
+                thetaList0 = thetaList;
+        
+                % Write joint angles to the robot
+                robot.writeJoints(rad2deg(thetaList0)); % Convert radians to degrees
+        
+                % Adjust speed based on maxVel
+                pause(Tf / N * (1 - maxVel)); % Pause for desired velocity scaling
+            end
+        
+            disp('Position control completed successfully.');
         end
-        %
+
+
+
     end
 end
 

@@ -128,9 +128,9 @@ classdef realRobot < OM_X_arm
             readings = self.gripper.getJointReadings();
             curr_pos = readings(1);
             if open
-                desired_pos = -35;
-            else
                 desired_pos = 55;
+            else
+                desired_pos = -35;
             end
 
             % Check if we actually need to move
@@ -253,7 +253,30 @@ classdef realRobot < OM_X_arm
         end
 
 
+       function thetaList = computeJointAngles(self, targetPos, targetOrient)
+            T_target = [targetOrient, targetPos; 0, 0, 0, 1];
+        
+            thetaList0 = zeros(size(self.slist, 2), 1); 
+        
+            eomg = 1e-3; 
+            ev = 1e-3;  
+            [thetaList, success] = IKinSpace(self.slist, self.M, T_target, thetaList0, eomg, ev);
+        
+            if ~success
+                error('Inverse kinematics did not converge to a solution.');
+            end
+            
+            disp('Computed joint angles (radians):');
+            disp(thetaList);
+        end
 
+
+        function T=FindTFromPosAndAngle(~,pos)
+            newX=[0;0;1];
+            newZ=-unitVector([pos(1);pos(2);0]);
+            newY=cross(newZ,newX);
+            T=[newX newY newZ pos; 0 0 0 1];
+        end
 
 
         function outputArg = method1()

@@ -1,16 +1,30 @@
 robot = Robot();
 robot.writeMode('curr position');
 
-desired_positions = [0, 0, -30, -70];
+desired_positions = [0, 0, 0, 0];
+% 
+ robot.writeJoints(desired_positions);
+robot.writeGripper(true)
 
-robot.writeJoints(desired_positions);
+
+% Example joint angles to test
+% testAngles = [-45.0000
+%   -10.8933
+%    30.5373
+%   -19.6439]; % In degrees
+% 
+% robot.writeJoints(testAngles);
+
 
 tic;
 while toc < 15
     try
-        readings = robot.getJointsReadings(); 
+        readings = robot.getJointsReadings();
+        present_position = readings(1,:);
         present_currents_mA = readings(3, :); 
         disp(['Present currents: ', mat2str(present_currents_mA), ' mA']);
+        disp(['Present position: ', mat2str(present_position),]);
+
     catch ME
         warning('Unable to read present currents. Error: %s', ME.message);
     end
