@@ -7,37 +7,43 @@ function [t,velocity]=WeirdTrajCalculator(totalTime,ticksPerSecond,MaxVel,deltaT
     velocity=zeros(ticksPerTotalTime,1);
     steadyTime=totalTime-rampTime;
     if rampTime>=totalTime
-        error('not trap');
-        % disp('Slash');
-        % if initialVel==0
-        %      MaxVel=2*deltaTheta/totalTime;
-        %      accel=(MaxVel/totalTime);
-        %     for i=1:ticksPerTotalTime
-        %         velocity(i)=accel*t(i);
-        %     end
-        % else
-        %     PlannedDeltaTheta=initialVel*totalTime/2;
-        %     if (PlannedDeltaTheta~=deltaTheta)
-        %         ddt=deltaTheta-PlannedDeltaTheta;
-        %         hyp=hypot(initialVel,totalTime);
-        %         h=2*ddt/hyp;
-        %         a=hypot(h,hyp);
-        %         phi1=atan2(h,hyp/2);
-        %         phi2=atan2(initialVel,totalTime);
-        %         y=a*sin(phi1+phi2);
-        %         x=a*cos(phi1+phi2);
-        %         % accel1=
-        %         % accel2=
-        %         %incomplete code here
-        % 
-        %     else
-        %         for i=1:ticksPerTotalTime
-        %             MaxVel=initialVel;
-        %             accel=(MaxVel/totalTime);
-        %             velocity(i)=initialVel-accel*t(i);
-        %         end
-        %     end
-        % end
+        % error('not trap');
+        disp('Slash');
+        if initialVel==0
+             MaxVel=2*deltaTheta/totalTime;
+             accel=(MaxVel/totalTime);
+            for i=1:ticksPerTotalTime
+                velocity(i)=accel*t(i);
+            end
+        else
+            PlannedDeltaTheta=initialVel*totalTime/2;
+            if (PlannedDeltaTheta~=deltaTheta)
+                ddt=deltaTheta-PlannedDeltaTheta;
+                hyp=hypot(initialVel,totalTime);
+                h=2*ddt/hyp;
+                a=hypot(h,hyp/2);
+                phi1=atan2(h,hyp/2);
+                phi2=atan2(initialVel,totalTime);
+                y=a*sin(phi1+phi2);
+                x=a*cos(phi1+phi2);
+                accel1=(y-initialVel)/(totalTime-x);
+                accel2=-y/x;
+                %incomplete code here
+                i1=round((totalTime-x)*ticksPerSecond);
+                for i=1:i1
+                    velocity(i)=initialVel+accel1*t(i);
+                end
+                for i=i1+1:round(totalTime*ticksPerSecond)
+                    velocity(i)=velocity(i1)+accel2*(t(i)-t(i1));
+                end
+            else
+                for i=1:ticksPerTotalTime
+                    MaxVel=initialVel;
+                    accel=(MaxVel/totalTime);
+                    velocity(i)=initialVel-accel*t(i);
+                end
+            end
+        end
     elseif rampTime>0
         disp('half-trapazoid')
         if initialVel==0

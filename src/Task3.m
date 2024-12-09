@@ -24,8 +24,8 @@ for i=1:4
     deltaTheta1=thetaListC(i)-thetaListA(i);
     deltaTheta2=thetaListB(i)-thetaListC(i);
     if deltaTheta1/abs(deltaTheta1)==deltaTheta2/abs(deltaTheta2)
-        [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i),0);
-        [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListB(i)-thetaListC(i),jointVelocities(i,ticksPerSecond*timePerFirstMotion));
+        [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListC(i)-thetaListA(i),0);
+        [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i),jointVelocities(i,ticksPerSecond*timePerFirstMotion));
     else
         [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i));
         [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i));
