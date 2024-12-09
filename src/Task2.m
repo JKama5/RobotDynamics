@@ -5,9 +5,9 @@ R=OurRobot;
 % robot = realRobot();
 % robot.writeMode('curr position');
 Task=Task1Functions(R);
-TA=robot.FindTFromPosAndAngle([.185,-.185,.185]');
-TB=robot.FindTFromPosAndAngle([.185,.170,.070]');
-TC=robot.FindTFromPosAndAngle([.185, 0, .240]');
+TA=Task.FindTFromPosAndAngle([.185,-.185,.185]');
+TB=Task.FindTFromPosAndAngle([.185,.170,.070]');
+TC=Task.FindTFromPosAndAngle([.185, 0, .240]');
 figure;
 title('End Effector 3D Position and Orientation')
 PlotFrame(TA,true,"TA");
@@ -52,6 +52,7 @@ title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
 %plots what the robot will do
+%% PLOT
 FollowTraj(JointPos,time,'plot');
 JointPosDeg = rad2deg(JointPos);
 %% Run the robot

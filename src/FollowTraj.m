@@ -38,6 +38,5 @@ function  FollowTraj(traj,t,type,robot)
             end
         end
         
-    end
 end
 

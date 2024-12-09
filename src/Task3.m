@@ -59,6 +59,7 @@ hold off
 %plots what the robot will do
 FollowTraj(JointPos,time,'plot');
 
+
 % %% Run the robot
 % FollowTraj(jointVelocities,time,'vel');
 %% Run the robot
