@@ -1,6 +1,6 @@
-function  FollowTraj(traj,t,type) 
-    m=Model(false);
-    addpath("C:\Users\16178\Documents\WPIStuff\classes\Robotics\RBE3001_C24_Team02-main\RBE3001_C24_Team02-main\src")
+function  FollowTraj(traj,t,type,robot) 
+    %m=Model(false);
+    %addpath("C:\Users\16178\Documents\WPIStuff\classes\Robotics\RBE3001_C24_Team02-main\RBE3001_C24_Team02-main\src")
     if strcmp(type,'pos')
         robot = realRobot();
         robot.writeMode('curr position');
@@ -19,7 +19,8 @@ function  FollowTraj(traj,t,type)
             m.plot_arm(trajD(:,i)');
             drawnow
         else
-            robot.writeJoints(traj(:,i)');
+            robot.writeJoints(trajD(:,i)');
+            pause(0.001);
         end
     end
 end
