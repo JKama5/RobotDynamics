@@ -2,8 +2,8 @@ clear;
 close all;
 R=OurRobot;
 % Model(R.mlist);
-robot = realRobot();
-robot.writeMode('curr position');
+% robot = realRobot();
+% robot.writeMode('curr position');
 Task=Task1Functions(R);
 TA=robot.FindTFromPosAndAngle([.185,-.185,.185]');
 TB=robot.FindTFromPosAndAngle([.185,.170,.070]');
@@ -18,8 +18,6 @@ thetaListB=IKinSpace(R.slist,R.M,TB,deg2rad([45;45;45;-60]),.00001,.00001);
 thetaListC=IKinSpace(R.slist,R.M,TC,deg2rad([0;-45;0;10]),.00001,.00001);
 disp(rad2deg(thetaListA));
 disp(rad2deg(thetaListC));
-robot.writeJoints(rad2deg(thetaListA));
-pause(3);
 ticksPerSecond=100;
 timePerFirstMotion=9;
 timePerSecondMotion=timePerFirstMotion;
@@ -53,12 +51,15 @@ legend('j1','j2','j3','j4')
 title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
-
 %plots what the robot will do
-% FollowTraj(JointPos,time,'plot');
-
-
+FollowTraj(JointPos,time,'plot');
 JointPosDeg = rad2deg(JointPos);
-% %% Run the robot
-FollowTraj(JointPos,time,'pos',robot);
-
+%% Run the robot
+% RR=realRobot();
+% RR.writeMode('curr position');
+% RR.writeJoints(rad2deg(thetaListA));
+% tic;
+% while toc<2
+% 
+% end
+% FollowTraj(JointPos,time,'pos',RR);
