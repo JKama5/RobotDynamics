@@ -21,8 +21,8 @@ timePerSecondMotion=timePerFirstMotion;
 jointVelocities=zeros(4,ticksPerSecond*20);
 time=1/ticksPerSecond:1/ticksPerSecond:20;
 for i=1:4
-    [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.5,thetaListC(i)-thetaListA(i));
-    [t2,jointVelocities(i,ticksPerSecond*(2+timePerFirstMotion)+1:end)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.5,thetaListB(i)-thetaListC(i));
+    [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i));
+    [t2,jointVelocities(i,ticksPerSecond*(2+timePerFirstMotion)+1:end)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i));
     
 end
 figure;
