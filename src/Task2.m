@@ -31,13 +31,13 @@ xlabel('time (s)')
 ylabel('velocity (rad/s)')
 legend('j1','j2','j3','j4')
 title('Joint Velocities Over Time')
-relativeJointPos=zeros(size(jointVelocities));
+JointPos=zeros(size(jointVelocities));
 for i=1:size(jointVelocities,2)
-    relativeJointPos(:,i)=(sum(jointVelocities(:,1:i),2)/ticksPerSecond)+thetaListA;
+    JointPos(:,i)=(sum(jointVelocities(:,1:i),2)/ticksPerSecond)+thetaListA;
 end
 
 figure;
-plot(time,relativeJointPos')
+plot(time,JointPos')
 xlabel('time (s)')
 ylabel('position (rad)')
 hold on
@@ -49,6 +49,8 @@ legend('j1','j2','j3','j4')
 title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
+
+FollowTraj(JointPos,time,'pos');
 
 % LSPBCalculator()
 

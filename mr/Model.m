@@ -1,4 +1,4 @@
-function fk=Model(compTransform)
+function fk=model(compTransform)
             AxisSize=.05;%the size of the frame axes' lines
             sz = size(compTransform);
 
