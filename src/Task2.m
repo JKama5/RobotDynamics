@@ -50,7 +50,8 @@ title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
 
-FollowTraj(JointPos,time,'pos');
+FollowTraj(JointPos,time,'plot');
+
 
 % LSPBCalculator()
 
