@@ -8,9 +8,9 @@ TB=Task.FindTFromPosAndAngle([.185,.170,.070]');
 TC=Task.FindTFromPosAndAngle([.185, 0, .240]');
 figure;
 title('End Effector 3D Position and Orientation')
-PlotFrame(TA,true);
-PlotFrame(TB,true);
-PlotFrame(TC,false);
+PlotFrame(TA,true,'TA');
+PlotFrame(TB,true,'TB');
+PlotFrame(TC,false,'TC');
 thetaListA=IKinSpace(R.slist,R.M,TA,deg2rad([-45;0;30;-30]),.00001,.00001);
 thetaListB=IKinSpace(R.slist,R.M,TB,deg2rad([45;45;45;-60]),.00001,.00001);
 thetaListC=IKinSpace(R.slist,R.M,TC,deg2rad([0;-45;0;10]),.00001,.00001);
@@ -24,8 +24,8 @@ for i=1:4
     deltaTheta1=thetaListC(i)-thetaListA(i);
     deltaTheta2=thetaListB(i)-thetaListC(i);
     if deltaTheta1/abs(deltaTheta1)==deltaTheta2/abs(deltaTheta2)
-        [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i),0);
-        [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListB(i)-thetaListC(i),jointVelocities(i,ticksPerSecond*timePerFirstMotion));
+        [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListC(i)-thetaListA(i),0);
+        [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i),jointVelocities(i,ticksPerSecond*timePerFirstMotion));
     else
         [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i));
         [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i));
@@ -56,21 +56,8 @@ title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
 
+%plots what the robot will do
 FollowTraj(JointPos,time,'plot');
 
-
-% LSPBCalculator()
-
-
-% %% Moving robot
-% robot = Robot();
-% robot.writeMode('curr position');
-% 
-% robot.writeJoints([0, 0, 0, 0]);
-% tic;
-% disp(waiting)
-% while toc<4
-% 
-% end
-% disp('moving to A')
-% robot.writeJoints(thetaListA);
+% %% Run the robot
+% FollowTraj(jointVelocities,time,'vel');

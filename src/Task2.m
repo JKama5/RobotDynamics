@@ -8,9 +8,9 @@ TB=Task.FindTFromPosAndAngle([.185,.170,.070]');
 TC=Task.FindTFromPosAndAngle([.185, 0, .240]');
 figure;
 title('End Effector 3D Position and Orientation')
-PlotFrame(TA,true);
-PlotFrame(TB,true);
-PlotFrame(TC,false);
+PlotFrame(TA,true,"TA");
+PlotFrame(TB,true,"TB");
+PlotFrame(TC,false,"TC");
 thetaListA=IKinSpace(R.slist,R.M,TA,deg2rad([-45;0;30;-30]),.00001,.00001);
 thetaListB=IKinSpace(R.slist,R.M,TB,deg2rad([45;45;45;-60]),.00001,.00001);
 thetaListC=IKinSpace(R.slist,R.M,TC,deg2rad([0;-45;0;10]),.00001,.00001);
@@ -50,21 +50,10 @@ title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
 
+%plots what the robot will do
 FollowTraj(JointPos,time,'plot');
 
 
-% LSPBCalculator()
+% %% Run the robot
+% FollowTraj(JointPos,time,'pos');
 
-
-% %% Moving robot
-% robot = Robot();
-% robot.writeMode('curr position');
-% 
-% robot.writeJoints([0, 0, 0, 0]);
-% tic;
-% disp(waiting)
-% while toc<4
-% 
-% end
-% disp('moving to A')
-% robot.writeJoints(thetaListA);

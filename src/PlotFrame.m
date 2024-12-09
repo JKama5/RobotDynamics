@@ -1,4 +1,4 @@
-function PlotFrame(T,holdOn)
+function PlotFrame(T,holdOn,lable)
     hold on;
     scale=.03;
     for i= 1:size(T,3)
@@ -10,6 +10,7 @@ function PlotFrame(T,holdOn)
         quiver3(X,Y,Z,T(1,2,i)*scale, T(2,2,i)*scale, T(3,2,i)*scale,'g'); %y axis
         quiver3(X,Y,Z,T(1,3,i)*scale, T(2,3,i)*scale, T(3,3,i)*scale,'b'); %x axis
     end
+    text(X+scale,Y+scale,Z+scale,lable);
     xlabel('X (m)');
     ylabel('Y (m)');
     zlabel('Z (m)');
