@@ -48,41 +48,27 @@ for i=1:size(jointVelocities,2)
 end
 
 % 
-% figure;
-% plot(time,JointPos')
-% xlabel('time (s)')
-% ylabel('position (rad)')
-% hold on
-% scatter(0,thetaListA)
-% scatter(timePerFirstMotion,thetaListC)
-% scatter(20,thetaListB)
-% legend('j1','j2','j3','j4')
-% title('Joint Positions Over Time')
-% subtitle('including target positions')
-% hold off
+figure;
+plot(time,JointPos')
+xlabel('time (s)')
+ylabel('position (rad)')
+hold on
+scatter(0,thetaListA)
+scatter(timePerFirstMotion,thetaListC)
+scatter(20,thetaListB)
+legend('j1','j2','j3','j4')
+title('Joint Positions Over Time')
+subtitle('including target positions')
+hold off
+pause(1);
+FollowTraj(JointPos,time,'plot');
 
-% %% Run the robot
-RR = realRobot();
-RR.writeMode('cp');
-RR.writeJoints(rad2deg(thetaListA));
-tic;
-while toc<2
-
-end
-RR.writeMode('v');
-
-%plots what the robot will do
-FollowTraj(JointPos,time,'vel',RR);
-
-
-% %% Run the robot
-% FollowTraj(jointVelocities,time,'vel');
 %% Run the robot
 % RR=realRobot();
 % RR.writeMode('curr position');
 % RR.writeJoints(rad2deg(thetaListA));
 % tic;
-% while toc<2
+% while toc<3
 % 
 % end
-% FollowTraj(JointPos,time,'pos',RR);
+% FollowTraj(JointPos,time,'vel');

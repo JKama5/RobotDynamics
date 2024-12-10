@@ -203,6 +203,10 @@ classdef realRobot < OM_X_arm
             readings(3, :) = self.bulkReadWrite(DX_XM430_W350.CURR_LEN, DX_XM430_W350.CURR_CURRENT) ./ DX_XM430_W350.TICKS_PER_mA;
         end
 
+        function writeVelocities(self, vels)
+            vels = round(vels .* DX_XM430_W350.TICKS_PER_ANGVEL);
+            self.bulkReadWrite(DX_XM430_W350.VEL_LEN, DX_XM430_W350.GOAL_VELOCITY, vels);
+        end
 
         function setCurrentLimit(self, percentage)
 

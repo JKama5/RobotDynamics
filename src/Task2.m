@@ -53,14 +53,14 @@ subtitle('including target positions')
 hold off
 %plots what the robot will do
 %% PLOT
-% FollowTraj(JointPos,time,'plot');
-% JointPosDeg = rad2deg(JointPos);
+pause(1);
+FollowTraj(JointPos,time,'plot');
 %% Run the robot
-RR=realRobot();
-RR.writeMode('curr position');
-RR.writeJoints(rad2deg(thetaListA));
-tic;
-while toc<2
-
-end
-FollowTraj(JointPos,time,'pos',RR);
+% RR=realRobot();
+% RR.writeMode('curr position');
+% RR.writeJoints(rad2deg(thetaListA));
+% tic;
+% while toc<2
+% 
+% end
+% FollowTraj(JointPos,time,'pos');
