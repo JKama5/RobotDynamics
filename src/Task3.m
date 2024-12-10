@@ -60,7 +60,7 @@ legend('j1','j2','j3','j4')
 title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
-pause(1);
+pause(1.5);
 FollowTraj(JointPos,time,'plot');
 
 %% Run the robot

@@ -53,7 +53,7 @@ subtitle('including target positions')
 hold off
 %plots what the robot will do
 %% PLOT
-pause(1);
+pause(1.5);
 FollowTraj(JointPos,time,'plot');
 %% Run the robot
 % RR=realRobot();
