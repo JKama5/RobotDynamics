@@ -4,7 +4,7 @@ function  FollowTraj(traj,t,type)
     FullTimer=tic;
     figure;
         if strcmp(type,'plot')
-            addpath("C:\Users\16178\Documents\WPIStuff\classes\Robotics\RBE3001_C24_Team02-main\RBE3001_C24_Team02-main\src")
+            addpath("C:\Users\16178\Documents\WPIStuff\classes\Robotics\501\RobotDynamics\3001")
             m=Model(false);
             while toc(FullTimer)<t(end)
                 i=ceil(toc(FullTimer)/resolution);
