@@ -20,6 +20,7 @@ classdef realRobot < OM_X_arm
         % Add startup functionality here
         function self = realRobot()
             SetUp;
+            self@OM_X_arm(); 
             % Change robot to position mode with torque enabled by default
             % Feel free to change this as desired
             self.writeMode('cp');
@@ -154,6 +155,13 @@ classdef realRobot < OM_X_arm
             currentInTicks = round(currents .* DX_XM430_W350.TICKS_PER_mA);
             self.bulkReadWrite(DX_XM430_W350.CURR_LEN, DX_XM430_W350.GOAL_CURRENT, currentInTicks);
         end
+
+        function writeVelocities(self, vels)
+            vels = round(vels .* DX_XM430_W350.TICKS_PER_ANGVEL);
+            self.bulkReadWrite(DX_XM430_W350.VEL_LEN, DX_XM430_W350.GOAL_VELOCITY, vels);
+        end
+
+
 
         % Change the operating mode for all joints:
         % https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/#operating-mode11
