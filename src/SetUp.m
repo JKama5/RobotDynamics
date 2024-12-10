@@ -5,11 +5,18 @@ currentFolder = fileparts(mfilename('fullpath'));
 projectFolder = fileparts(currentFolder);
 
 % Build the path to the library folder
-libraryFolder = fullfile(projectFolder, 'mr');
+ModernRoboticsFolder = fullfile(projectFolder, 'mr');
+RBE3001Folder = fullfile(projectFolder,'3001');
 
 % Add the library folder to the MATLAB path
-addpath(libraryFolder);
+addpath(ModernRoboticsFolder);
 
 % (Optional) Confirm the path was added
-disp(['Library folder added to path: ', libraryFolder]);
+disp(['Modern Robotics library folder added to path: ', ModernRoboticsFolder]);
+
+
+%added 3001 stuff
+addpath(RBE3001Folder);
+disp(['RBE3001 plotting library folder added to path: ', RBE3001Folder]);
+
 
