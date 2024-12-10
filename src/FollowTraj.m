@@ -32,11 +32,10 @@ function  FollowTraj(traj,t,type,robot)
                 drawnow
             end
         else
-            for i=1:1:size(t,2)
-                robot.writeJoints(trajD(:,i)');
-                pause(resolution);
+            for i = 1:size(traj, 2)
+                robot.writeJoints(trajD(:, i)'); % Send joint commands to the robot
+                pause(resolution); % Wait for the next time step
             end
         end
-        
 end
 
