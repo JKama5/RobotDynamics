@@ -1,0 +1,72 @@
+Target transformation matrix (T_target):
+         0    0.7071   -0.7071    0.1850
+         0    0.7071    0.7071   -0.1850
+    1.0000         0         0    0.1850
+         0         0         0    1.0000
+
+Reading Motor Currents...
+
+taulist =
+
+    0.0000
+   -0.4410
+   -0.4844
+   -0.1376
+
+Constant: 
+    0.0037
+
+Taulist: 
+    0.0000
+   -0.4410
+   -0.4844
+   -0.1376
+
+Current-based estimate: 
+    0.0007
+   -0.4098
+   -0.4888
+   -0.1928
+
+Error: 
+    0.0007
+    0.0311
+    0.0044
+    0.0551
+
+Please apply a wrench to the end effector.
+Reading in 5 seconds.
+Reading in 4 seconds.
+Reading in 3 seconds.
+Reading in 2 seconds.
+Reading in 1 second.
+Reading...
+Target transformation matrix (T_target):
+         0   -0.8944   -0.4472    0.0500
+         0    0.4472   -0.8944    0.1000
+    1.0000         0         0    0.2900
+         0         0         0    1.0000
+
+Currents: 
+         0
+   15.5495
+ -199.1912
+  -38.9066
+
+Theoretical Torques: 
+    0.0000
+    0.0937
+   -0.3517
+   -0.1376
+
+Calculated Torques: 
+         0
+    0.0570
+   -0.7306
+   -0.1427
+
+Error: 
+    0.0000
+    0.0367
+    0.3790
+    0.0051
