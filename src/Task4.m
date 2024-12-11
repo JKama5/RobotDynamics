@@ -70,6 +70,15 @@ pause(1);
 disp("Reading in 1 second.");
 pause(1);
 disp("Reading...");
+%% Going to a new position
+
+B_target = [0.05; 0.10; 0.29];
+B_transform = robot.FindTFromPosAndAngle(B_target);
+B_orient = B_transform(1:3, 1:3);
+thetaB = robot.computeJointAngles(B_target, B_orient, thetaList0);
+robot.writeJoints(rad2deg(thetaB));
+pause(maxTime);
+%% Reading currents
 try
     readings = robot.getJointsReadings(); % 1x4
     currents = readings(3, :); % 1x4
@@ -85,9 +94,12 @@ try
 catch ME
     warning('Unable to read present currents. Error: %s', getReport(ME));
 end
+
+thetalist = deg2rad(readings(1, :)); % 1x4
+thetalist = reshape(thetalist, [4, 1]); % 4x1
 torques = currents .* constant; % 4x1 .* 1x1 = 4x1
 %% Calculate Torque, compare to theoretical torque
-Ftip = [0; 0; 0; -0*9.81; -0*9.81; 0*9.81];
+Ftip = [0; 0; 0; 0*9.81; -0*9.81; 0*9.81];
 taulist = InverseDynamics(thetalist, [0; 0; 0; 0], [0; 0; 0; 0], g, Ftip, robot.mlist, robot.glist, robot.slist);
 disp("Theoretical Torques: ");
 disp(taulist); % 4x1
