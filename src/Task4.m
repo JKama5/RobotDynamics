@@ -47,16 +47,9 @@ disp("Taulist: ");
 disp(taulist); % 4x1
 disp("Current-based estimate: ");
 disp(currents .* constant); % 4x1
-error = -100 * (taulist - currents .* constant)./taulist;
+error = (taulist - currents .* constant);
 disp("Error: ");
-disp(abs(error .* taulist)/100); % 4x1
-for i = 1:4
-    if(abs(error(i)) > 1e2)
-        error(i) = 1e2 * error(i) / abs(error(i));
-    end
-end
-disp("Percent Error: ");
-disp((error));
+disp(error); % 4x1
 %% Wait for a Wrench, then mark down current
 disp("Please apply a wrench to the end effector.");
 disp("Reading in 5 seconds.");
