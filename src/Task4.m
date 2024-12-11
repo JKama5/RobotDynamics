@@ -38,22 +38,9 @@ taulist = InverseDynamics(thetalist, [0; 0; 0; 0], [0; 0; 0; 0], ...
 currents= mean(currents); % 1x4
 
 %% Make an equation for torque based on current
-% for i = 1:4
-%     if(currents(i) == 0)
-%         currents(i) = 0.00001;
-%     end
-% end
 currents = reshape(currents, [4, 1]); % 4x1
-constants = [];
-for i = 1:4
-    taulist(i)
-    currents(i)
-    if(abs(taulist(i)) > 0.001 && abs(currents(i)) > 0.001)
-        constants = [constants; taulist(i) ./ currents(i)];
-    end
-end
-% constants = taulist ./ currents; % 4x1 .* 4x1 = 4x1
-constant = mean(constants, "all"); % 1x1
+taulist = reshape(taulist, [4, 1]); % 4x1
+constant = (currents' * taulist) / (currents' * currents);
 disp("Constant: ");
 disp(constant); % 1x1
 disp("Taulist: ");
