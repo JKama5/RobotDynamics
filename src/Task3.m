@@ -17,7 +17,7 @@ thetaListA=IKinSpace(R.slist,R.M,TA,deg2rad([-45;0;30;-30]),.00001,.00001);
 thetaListB=IKinSpace(R.slist,R.M,TB,deg2rad([45;45;45;-60]),.00001,.00001);
 thetaListC=IKinSpace(R.slist,R.M,TC,deg2rad([0;-45;0;10]),.00001,.00001);
 
-ticksPerSecond=100;
+ticksPerSecond=12;
 timePerFirstMotion=10;
 timePerSecondMotion=timePerFirstMotion;
 jointVelocities=zeros(4,ticksPerSecond*20);
@@ -26,8 +26,8 @@ for i=1:4
     deltaTheta1=thetaListC(i)-thetaListA(i);
     deltaTheta2=thetaListB(i)-thetaListC(i);
     if deltaTheta1/abs(deltaTheta1)==deltaTheta2/abs(deltaTheta2)
-        [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListC(i)-thetaListA(i),0);
-        [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i),jointVelocities(i,ticksPerSecond*timePerFirstMotion));
+        [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i),0);
+        [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=WeirdTrajCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListB(i)-thetaListC(i),jointVelocities(i,ticksPerSecond*timePerFirstMotion));
     else
         [t,jointVelocities(i,1:ticksPerSecond*timePerFirstMotion)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.1,thetaListC(i)-thetaListA(i));
         [t2,jointVelocities(i,ticksPerSecond*(timePerFirstMotion)+1:end)]=LSPBCalculator(timePerFirstMotion,ticksPerSecond,.25,thetaListB(i)-thetaListC(i));
@@ -35,12 +35,15 @@ for i=1:4
     
 end
 
-% figure;
-% stairs(time,jointVelocities');
-% xlabel('time (s)')
-% ylabel('velocity (rad/s)')
-% legend('j1','j2','j3','j4')
-% title('Joint Velocities Over Time')
+figure;
+stairs(time,jointVelocities');
+hold on
+grid on
+xlabel('time (s)')
+ylabel('velocity (rad/s)')
+legend('j1','j2','j3','j4')
+title('Joint Velocities Over Time')
+hold off
 
 JointPos=zeros(size(jointVelocities));
 for i=1:size(jointVelocities,2)
@@ -60,15 +63,15 @@ legend('j1','j2','j3','j4')
 title('Joint Positions Over Time')
 subtitle('including target positions')
 hold off
-pause(1.5);
-FollowTraj(JointPos,time,'plot');
+% pause(1.5);
+% FollowTraj(JointPos,time,'plot');
 
 %% Run the robot
-% RR=realRobot();
-% RR.writeMode('curr position');
-% RR.writeJoints(rad2deg(thetaListA));
-% tic;
-% while toc<3
-% 
-% end
-% FollowTraj(JointPos,time,'vel');
+RR=realRobot();
+RR.writeMode('curr position');
+RR.writeJoints(rad2deg(thetaListA));
+tic;
+while toc<4
+
+end
+FollowTraj(jointVelocities,time,'vel');
