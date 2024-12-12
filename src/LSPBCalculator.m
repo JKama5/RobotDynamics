@@ -1,11 +1,12 @@
 function [t,velocity]=LSPBCalculator(totalTime,ticksPerSecond,MaxVel,deltaTheta)
+    MaxVel=MaxVel*(deltaTheta/abs(deltaTheta));
     ticksPerTotalTime=round(ticksPerSecond*totalTime);
     rampTime=totalTime-(deltaTheta/MaxVel);
     accel=MaxVel/rampTime;
     t=[totalTime/ticksPerTotalTime:totalTime/ticksPerTotalTime:totalTime]';
     velocity=zeros(ticksPerTotalTime,1);
     steadyTime=totalTime-2*rampTime;
-    if rampTime>=deltaTheta/2
+    if rampTime>=totalTime/2
         disp('triangle')
         MaxVel=2*deltaTheta/totalTime;
         accel=(2*MaxVel/totalTime);
