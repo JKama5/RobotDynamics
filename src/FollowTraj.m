@@ -23,7 +23,6 @@ function  FollowTraj(traj,t,type)
             end
             for i = 1:size(traj, 2)
                 if strcmp(type,'pos')
-                    robot.writeMode('curr position');
                     robot.writeJoints(trajD(:, i)'); % Send joint commands to the robot
                 elseif strcmp(type,'vel')
                     (trajD(:,i))

@@ -56,11 +56,11 @@ hold off
 pause(1.5);
 FollowTraj(JointPos,time,'plot');
 %% Run the robot
-% RR=realRobot();
-% RR.writeMode('curr position');
-% RR.writeJoints(rad2deg(thetaListA));
-% tic;
-% while toc<2
-% 
-% end
-% FollowTraj(JointPos,time,'pos');
+RR=realRobot();
+RR.writeMode('curr position');
+RR.writeJoints(rad2deg(thetaListA));
+tic;
+while toc<3
+
+end
+FollowTraj(JointPos,time,'pos');
